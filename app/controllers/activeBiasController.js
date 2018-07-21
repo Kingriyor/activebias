@@ -4,6 +4,7 @@
 
 const Response = require('../lib/responseManager');
 const HttpStatus = require('../constants/httpStatus');
+var request = require('request');
 
 class activeBiasController {
   /**
@@ -19,7 +20,65 @@ class activeBiasController {
 
 
   createNewactiveBias(req, res) {
+    
+     // ['type', 'amount', 'balance', 'month', 'day', 'age', 'spend_power',
+  //     'marital_status', 'employment_status']
+    const { accountNumber } = req.body;
+    const { type } = req.body;
+    const { amount } = req.body;
+    const { balance } = req.body;
+    const { month } = req.body;
+    const { day } = req.body;
+    const { age } = req.body;
+    const { spend_power } = req.body;
+    const { marital_status } = req.body;
+    const { employment_status } = req.body;
+    
+    if (!accountNumber) {
+      return Response.failure(res, { message: 'Enter accountNumber' }, HttpStatus.BadRequest);
+    }
+    if (!type) {
+      return Response.failure(res, { message: 'Enter type !' }, HttpStatus.BadRequest);
+    }
+    if (!amount) {
+      return Response.failure(res, { message: 'Enter amount !' }, HttpStatus.BadRequest);
+    }
+    if (!balance) {
+      return Response.failure(res, { message: 'Enter balance !' }, HttpStatus.BadRequest);
+    }
+    if (!month) {
+      return Response.failure(res, { message: 'Enter month !' }, HttpStatus.BadRequest);
+    }
+    if (!day) {
+      return Response.failure(res, { message: 'Enter day !' }, HttpStatus.BadRequest);
+    }
+    if (!age) {
+      return Response.failure(res, { message: 'Enter age !' }, HttpStatus.BadRequest);
+    }
+    if (!spend_power) {
+      return Response.failure(res, { message: 'Enter spend_power !' }, HttpStatus.BadRequest);
+    }
+    if (!marital_status) {
+      return Response.failure(res, { message: 'Enter marital_status !' }, HttpStatus.BadRequest);
+    }
+    if (!employment_status) {
+      return Response.failure(res, { message: 'Enter employment_status !' }, HttpStatus.BadRequest);
+    }
+
     const activeBiasDetails = req.body;
+
+
+    request.post({
+      headers: {'content-type' : 'application/x-www-form-urlencoded'},
+      url:     'http://localhost/test2.php',
+      body:    activeBiasDetails
+    }, function(error, response, body){
+
+      console.log(body);
+      
+      activeBiasDetails.predicted_category = body.accountNumber;
+
+    // get response from model API before sending saving and sending response
     return this.activeBiasService.addNewactiveBias(activeBiasDetails)
       .then(response => Response.success(res, {
         message: 'activeBias was successfully Saved',
@@ -29,30 +88,29 @@ class activeBiasController {
         message: error,
         response: {},
       }, HttpStatus.NOT_FOUND));
+    });
+
+    
   }
 
 
-  getactiveBiasByMerchantToken(req, res) {
-    const { token } = req.params;
-    const { merchantId } = req.params;
+  getactiveBiasByAccountNumber(req, res) {
+    const { accountNumber } = req.params;
 
-    if (!token) {
-      return Response.failure(res, { message: 'Enter token' }, HttpStatus.BadRequest);
-    }
-    if (!merchantId) {
-      return Response.failure(res, { message: 'Enter merchantId !' }, HttpStatus.BadRequest);
+    if (!accountNumber) {
+      return Response.failure(res, { message: 'Enter accountNumber' }, HttpStatus.BadRequest);
     }
 
-    return this.activeBiasService.searchMerchantToken(merchantId, token)
+    return this.activeBiasService.searchMerchantToken(accountNumber)
       .then(result => Response.success(res, {
         testValid: result.token,
-        message: 'valid merchant_id and token',
+        message: 'valid accountNumber',
         response: result
       }, HttpStatus.OK))
       .catch((error) => {
         this.logger.error('activeBiasUpdate', error);
         return Response.failure(res, {
-          message: 'merchantId - token credentials invalid'
+          message: 'accountNumber invalid'
         }, HttpStatus.NOT_FOUND);
       });
   }

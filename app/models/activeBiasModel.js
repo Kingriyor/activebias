@@ -13,41 +13,47 @@ const { Schema } = mongoose;
 
 
 const activeBiasSchema = new Schema({
-  campaignId: {
+  // ['type', 'amount', 'balance', 'month', 'day', 'age', 'spend power',
+  //     'marital status', 'employment status']
+  accountNumber: {
+    type: 'String',
+    required: true
+  },
+  amount: {
     type: 'String',
     required: false
   },
-  merchantId: {
+  balance: {
     type: 'String',
-    required: true
+    required: false
   },
-  msisdn: {
+  month: {
     type: 'String',
-    required: true
+    required: false
   },
-  converted: {
-    type: 'Boolean',
+  day: {
+    type: 'String',
+    required: false
+  },
+  age: {
+    type: 'String',
     required: false,
-    default: false
   },
-  salesAmount: {
-    type: 'Number',
-    required: false,
-    default: 0
-  },
-  token: {
+  spend_power: {
     type: 'String',
-    required: true,
-  },
-  campaignType: {
-    type: 'String',
-    required: true,
-    enum: ['existing', 'new']
-  },
-  cartItems: {
-    type: ['Object'],
     required: false,
-    default: []
+  },
+  marital_status: {
+    type: 'String',
+    required: false,
+  },
+  employment_status: {
+    type: 'String',
+    required: false,
+  },
+  predicted_category: {
+    type: 'String',
+    required: false,
   }
 });
 

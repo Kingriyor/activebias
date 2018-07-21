@@ -19,7 +19,7 @@ const config = {
       dbProd: process.env.MONGODB_DATABASE_NAME
     },
     collections: {
-      activeBias: 'hackathon_2018',
+      activeBias: 'hackathon_2018_2',
     },
     queryLimit: process.env.MONGODB_QUERY_LIMIT,
   },

@@ -33,8 +33,8 @@ class activeBiasService {
    * @param token
    * @returns {Promise}
    */
-  searchMerchantToken(merchantId, token) {
-    const params = { conditions: { merchantId, token } };
+  searchMerchantToken(accountNumber) {
+    const params = { conditions: { accountNumber } };
     return this.mongoDBClientHelper.get(params);
   }
 
