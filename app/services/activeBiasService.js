@@ -38,6 +38,11 @@ class activeBiasService {
     return this.mongoDBClientHelper.get(params);
   }
 
+  searchByPrediction(predicted_category){
+    const params = { conditions: { predicted_category } };
+    return this.mongoDBClientHelper.get(params);
+  }
+
 
   /**
    * Gets a single category

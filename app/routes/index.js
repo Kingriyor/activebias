@@ -23,6 +23,12 @@ module.exports.setup = function setup(server, serviceLocator) {
     version: '1.0.0'
   }, (req, res) => activeBiasController.getactiveBiasByAccountNumber(req, res));
 
+  server.get({
+    path: '/activeBiass/getPredictions/:predicted_category',
+    name: 'get profile',
+    version: '1.0.0'
+  }, (req, res) => activeBiasController.getallByPrediction(req, res));
+
 
   server.post({
     path: '/activeBiass/sendProfile',

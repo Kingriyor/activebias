@@ -123,6 +123,27 @@ class activeBiasController {
   }
 
 
+  getallByPrediction(req, res) {
+    const { predicted_category } = req.params;
+
+    if (!predicted_category) {
+      return Response.failure(res, { message: 'Enter predicted_category' }, HttpStatus.BadRequest);
+    }
+
+    return this.activeBiasService.searchByPrediction(predicted_category)
+      .then(result => Response.success(res, {
+        testValid: result.token,
+        message: 'valid prediction category',
+        response: result
+      }, HttpStatus.OK))
+      .catch((error) => {
+        this.logger.error('predicted_category_invalid', error);
+        return Response.failure(res, {
+          message: 'predicted_category invalid'
+        }, HttpStatus.NOT_FOUND);
+      });
+  }
+
   updateactiveBiasByMerchantToken(req, res) {
     const { token } = req.body;
     const { merchantId } = req.params;
