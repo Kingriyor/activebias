@@ -1,8 +1,8 @@
 /**
- * Created by Femibams on 21/07/2018.
+ * Created by EMEHINOLA Idowu on 19/06/2018.
  */
 
-const appName = 'ReCode Hackathon';
+const appName = 'ACTIVEBIAS';
 
 const config = {
   appName,
@@ -10,14 +10,28 @@ const config = {
     url: process.env.APP_URL,
     port: process.env.APP_PORT
   },
+  mongo: {
+    connection: {
+      host: process.env.MONGODB_HOST,
+      username: process.env.MONGODB_USER,
+      password: process.env.MONGODB_PASSWORD,
+      port: process.env.MONGODB_PORT,
+      dbProd: process.env.MONGODB_DATABASE_NAME
+    },
+    collections: {
+      activeBias: 'hackathon_2018',
+    },
+    queryLimit: process.env.MONGODB_QUERY_LIMIT,
+  },
+  mongoErrorCode: {
+    duplicateId: 11000
+  },
   logging: {
     level: process.env.LOG_LEVEL || 'info',
     console: process.env.LOG_ENABLE_CONSOLE === 'true'
   },
-  mysql: {
-      host: process.env.MYSQL_HOST,
-      user: process.env.MYSQL_USER,
-      password: process.env.MYSQL_PASSWORD 
+  collections: {
+    report_collection: 'report'
   }
 };
 

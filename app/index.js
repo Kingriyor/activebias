@@ -1,5 +1,5 @@
 /**
- * Created by Femibams on 21/07/2018
+ * Created by EMEHINOLA Idowu on 19/06/2018 | kingriyor.
  * objective: building to scale
  */
 
@@ -16,6 +16,8 @@ const corsMiddleware = require('restify-cors-middleware');
 // service locator via dependency injection
 const servicelocator = require('./config/di');
 
+const logger = servicelocator.get('logger');
+const mongo = servicelocator.get('mongo');
 
 const cors = corsMiddleware({
   preflightMaxAge: 5,
@@ -36,5 +38,5 @@ server.use(cors.actual);
 indexRoute.setup(server, servicelocator);
 
 
-server.listen(config.server.port, () => console.log('%s listening at %s', server.name, server.url));
+server.listen(config.server.port, () => logger.info('%s listening at %s', server.name, server.url));
 module.exports = server;
