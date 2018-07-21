@@ -1,0 +1,20 @@
+{
+  "name": "recode_hackathon",
+  "version": "1.0.0",
+  "description": "hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "femibams",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "dotenv": "^6.0.0",
+    "eslint": "5.1.0",
+    "morgan": "^1.9.0",
+    "restify": "^7.2.1",
+    "restify-cors-middleware": "^1.1.1",
+    "winston": "^3.0.0"
+  }
+}
