@@ -73,21 +73,28 @@ class activeBiasController {
       url:     'http://localhost/test2.php',
       body:    activeBiasDetails
     }, function(error, response, body){
+      if(error){
+        return Response.failure(res, { message: 'Unable to reach API !' }, HttpStatus.SERVICE_UNAVAILABLE);
+      }
+      else{
+      console.log("body",body);
+      console.log("response",response);
 
-      console.log(body);
-      
+
       activeBiasDetails.predicted_category = body.accountNumber;
 
     // get response from model API before sending saving and sending response
     return this.activeBiasService.addNewactiveBias(activeBiasDetails)
       .then(response => Response.success(res, {
-        message: 'activeBias was successfully Saved',
+        message: 'activeBias profile was successfully Saved',
         response,
       }, HttpStatus.CREATED))
       .catch(error => Response.failure(res, {
         message: error,
         response: {},
       }, HttpStatus.NOT_FOUND));
+      }
+
     });
 
     
