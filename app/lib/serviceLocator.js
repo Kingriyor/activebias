@@ -1,6 +1,5 @@
 /**
- * Created by EMEHINOLA Idowu on 19/06/2018.
- * objective: building to scale
+ * Created by Ariyo (Kingriyor) Apakama.
  */
 
 

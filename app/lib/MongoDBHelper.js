@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 /**
- * Created by EMEHINOLA Idowu on 19/06/2018.
- * objective: building to scale
+ * Created by Ariyo (Kingriyor) Apakama.
  */
 
 const config = require('../config/config');

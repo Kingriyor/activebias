@@ -10,12 +10,6 @@ module.exports.setup = function setup(server, serviceLocator) {
     name: 'base',
     version: '1.0.0'
   }, (req, res) => res.send('WELCOME TO ACTIVEBIAS'));
-  
-  // server.post({
-  //   path: '/activeBiass/:merchantId/tokens',
-  //   name: 'Update activeBias',
-  //   version: '1.0.0'
-  // }, (req, res) => activeBiasController.updateactiveBiasByMerchantToken(req, res));
 
   server.get({
     path: '/activeBiass/:accountNumber',

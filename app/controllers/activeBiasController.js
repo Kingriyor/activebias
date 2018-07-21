@@ -20,9 +20,6 @@ class activeBiasController {
 
 
   createNewactiveBias(req, res) {
-    
-     // ['type', 'amount', 'balance', 'month', 'day', 'age', 'spend_power',
-  //     'marital_status', 'employment_status']
     const { accountNumber } = req.body;
     const { type } = req.body;
     const { amount } = req.body;
@@ -66,27 +63,28 @@ class activeBiasController {
     }
 
     const activeBiasDetails = req.body;
-
+    const ac = JSON.stringify(accountNumber);
+    const bd = JSON.stringify(activeBiasDetails);
+    const activeBiasService = this.activeBiasService;
+    let req_body = {};
+    req_body[accountNumber] = bd ;
+    req_body = JSON.stringify(req_body);
 
     request.post({
-      headers: {'content-type' : 'application/x-www-form-urlencoded'},
-      url:     'http://localhost/test2.php',
-      body:    activeBiasDetails
+      url:     'https://active-bias-working.herokuapp.com/',
+      body:    req_body
     }, function(error, response, body){
       if(error){
-        return Response.failure(res, { message: 'Unable to reach API !' }, HttpStatus.SERVICE_UNAVAILABLE);
+        return Response.failure(res, { message: 'Unable to reach profiling API !' }, HttpStatus.SERVICE_UNAVAILABLE);
       }
       else{
-      console.log("body",body);
-      console.log("response",response);
-
-
-      activeBiasDetails.predicted_category = body.accountNumber;
-
-    // get response from model API before sending saving and sending response
-    return this.activeBiasService.addNewactiveBias(activeBiasDetails)
+      const predicted_category_result = JSON.parse(body);
+      activeBiasDetails.predicted_category = predicted_category_result.label;
+  
+    // saving to db
+    return activeBiasService.addNewactiveBias(activeBiasDetails)
       .then(response => Response.success(res, {
-        message: 'activeBias profile was successfully Saved',
+        message: 'profile was successfully Saved',
         response,
       }, HttpStatus.CREATED))
       .catch(error => Response.failure(res, {

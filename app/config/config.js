@@ -1,5 +1,5 @@
 /**
- * Created by EMEHINOLA Idowu on 19/06/2018.
+ * Created by Ariyo (Kingriyor) Apakama.
  */
 
 const appName = 'ACTIVEBIAS';
