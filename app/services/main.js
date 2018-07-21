@@ -5,7 +5,8 @@ const config = require('../config/config');
 
 
 class Main {
-  constructor() {
+  constructor(mysql) {
+      this.mysqlConn = mysql;
   }
 
 }

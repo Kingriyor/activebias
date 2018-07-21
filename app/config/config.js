@@ -13,6 +13,11 @@ const config = {
   logging: {
     level: process.env.LOG_LEVEL || 'info',
     console: process.env.LOG_ENABLE_CONSOLE === 'true'
+  },
+  mysql: {
+      host: process.env.MYSQL_HOST,
+      user: process.env.MYSQL_USER,
+      password: process.env.MYSQL_PASSWORD 
   }
 };
 

@@ -2,6 +2,7 @@
 const Response = require('../lib/responseManager');
 const httpStatus = require('../constants/httpStatus');
 const config = require('../config/config');
+var rp = require('request-promise');
 
 class Main {
   /**
@@ -12,6 +13,10 @@ class Main {
   }
 
   testPost(req, res) {
+    const { accountNumber, option } = req.body;
+
+    
+
     return Response.success(res, {
         message: 'POST endpoint working!',
         response: {},

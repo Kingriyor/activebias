@@ -12,7 +12,7 @@ module.exports.setup = function setup(server, serviceLocator) {
     }, (req, res) => res.send('Welcome to ReCode Hackathon'));
   
     server.post({
-      path: '/test',
+      path: '/api',
       name: 'Test Post'
     }, (req, res) => mainController.testPost(req, res));
 
