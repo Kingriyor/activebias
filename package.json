@@ -1,7 +1,7 @@
 {
-  "name": "taja-adrenaline-marketing-application",
+  "name": "activebias",
   "version": "1.0.0",
-  "description": "Taja Adrenaline Marketing Application",
+  "description": "ActiveBias Application",
   "main": "index.js",
   "scripts": {
     "api": "node app/index.js",
