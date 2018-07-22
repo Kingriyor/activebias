@@ -18,10 +18,10 @@ const config = {
       // port: process.env.MONGODB_PORT,
       // dbProd: process.env.MONGODB_DATABASE_NAME
       host: '34.250.58.249',
-      username:'activebias',
-      password: 'activebias',
+      username:'digital_user',
+      password: 'dW5rURDJHdx9v2hV',
       port: '12707',
-      dbProd: 'activebias'
+      dbProd: 'digital_calculator_db'
     },
     collections: {
       activeBias: 'user_profiles',
