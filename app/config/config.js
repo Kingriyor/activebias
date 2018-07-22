@@ -12,16 +12,22 @@ const config = {
   },
   mongo: {
     connection: {
-      host: process.env.MONGODB_HOST,
-      username: process.env.MONGODB_USER,
-      password: process.env.MONGODB_PASSWORD,
-      port: process.env.MONGODB_PORT,
-      dbProd: process.env.MONGODB_DATABASE_NAME
+      // host: process.env.MONGODB_HOST,
+      // username: process.env.MONGODB_USER,
+      // password: process.env.MONGODB_PASSWORD,
+      // port: process.env.MONGODB_PORT,
+      // dbProd: process.env.MONGODB_DATABASE_NAME
+      host: '34.250.58.249',
+      username:'activebias',
+      password: 'activebias',
+      port: '12707',
+      dbProd: 'activebias'
     },
     collections: {
-      activeBias: 'hackathon_2018_2',
+      activeBias: 'user_profiles',
     },
-    queryLimit: process.env.MONGODB_QUERY_LIMIT,
+    // queryLimit: process.env.MONGODB_QUERY_LIMIT,
+    queryLimit: 1000
   },
   mongoErrorCode: {
     duplicateId: 11000
