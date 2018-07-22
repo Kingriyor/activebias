@@ -7,8 +7,10 @@ const appName = 'ACTIVEBIAS';
 const config = {
   appName,
   server: {
-    url: process.env.APP_URL,
-    port: process.env.APP_PORT
+    // url: process.env.APP_URL,
+    // port: process.env.APP_PORT
+    url: '',
+    port: 3110
   },
   mongo: {
     connection: {
