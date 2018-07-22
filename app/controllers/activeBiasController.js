@@ -5,6 +5,7 @@
 const Response = require('../lib/responseManager');
 const HttpStatus = require('../constants/httpStatus');
 var request = require('request');
+const rp = require('request-promise');
 
 class activeBiasController {
   /**
@@ -18,24 +19,22 @@ class activeBiasController {
     this.activeBiasService = activeBiasService;
   }
 
-
   createNewactiveBias(req, res) {
+    if (!req.body) {
+      return Response.failure(res, { message: 'Empty Request' }, HttpStatus.BadRequest);
+    }
     const { accountNumber } = req.body;
-    const { type } = req.body;
     const { amount } = req.body;
     const { balance } = req.body;
     const { month } = req.body;
     const { day } = req.body;
     const { age } = req.body;
     const { spend_power } = req.body;
-    const { marital_status } = req.body;
-    const { employment_status } = req.body;
+    const activeBiasDetails = req.body;
+
     
     if (!accountNumber) {
       return Response.failure(res, { message: 'Enter accountNumber' }, HttpStatus.BadRequest);
-    }
-    if (!type) {
-      return Response.failure(res, { message: 'Enter type !' }, HttpStatus.BadRequest);
     }
     if (!amount) {
       return Response.failure(res, { message: 'Enter amount !' }, HttpStatus.BadRequest);
@@ -55,49 +54,41 @@ class activeBiasController {
     if (!spend_power) {
       return Response.failure(res, { message: 'Enter spend_power !' }, HttpStatus.BadRequest);
     }
-    if (!marital_status) {
-      return Response.failure(res, { message: 'Enter marital_status !' }, HttpStatus.BadRequest);
-    }
-    if (!employment_status) {
-      return Response.failure(res, { message: 'Enter employment_status !' }, HttpStatus.BadRequest);
-    }
-
-    const activeBiasDetails = req.body;
-    const ac = JSON.stringify(accountNumber);
-    const bd = JSON.stringify(activeBiasDetails);
-    const activeBiasService = this.activeBiasService;
-    let req_body = {};
-    req_body[accountNumber] = bd ;
-    req_body = JSON.stringify(req_body);
-
-    request.post({
-      url:     'https://active-bias-working.herokuapp.com/',
-      body:    req_body
-    }, function(error, response, body){
-      if(error){
-        return Response.failure(res, { message: 'Unable to reach profiling API !' }, HttpStatus.SERVICE_UNAVAILABLE);
-      }
-      else{
-      const predicted_category_result = JSON.parse(body);
-      activeBiasDetails.predicted_category = predicted_category_result.label;
-  
-    // saving to db
-    return activeBiasService.addNewactiveBias(activeBiasDetails)
-      .then(response => Response.success(res, {
-        message: 'profile was successfully Saved',
-        response,
-      }, HttpStatus.CREATED))
-      .catch(error => Response.failure(res, {
-        message: error,
-        response: {},
-      }, HttpStatus.NOT_FOUND));
-      }
-
-    });
-
     
-  }
+    delete activeBiasDetails.accountNumber;
+    const req_body = activeBiasDetails;
+    const activeBiasService = this.activeBiasService;
+    const options = {
+      method: 'POST',
+      uri: 'https://active-bias-working.herokuapp.com/',
+      body:    req_body,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      json: true
+    };
 
+    return rp(options)
+      .then((data) => {
+        console.log(data);
+        const predicted_category_result = data;
+        activeBiasDetails.predicted_category = predicted_category_result.label;
+        activeBiasDetails.accountNumber = accountNumber;
+    
+      // saving to db
+      return activeBiasService.addNewactiveBias(activeBiasDetails)
+        .then(response => Response.success(res, {
+          message: 'profile was successfully Saved',
+          response,
+        }, HttpStatus.CREATED))
+        .catch(error => Response.failure(res, {
+          message: error,
+          response: {},
+        }, HttpStatus.NOT_FOUND));
+
+      })
+      .catch(error => Response.failure(res, { message: 'Unable to reach profiling API !' }, HttpStatus.SERVICE_UNAVAILABLE));
+  }
 
   getactiveBiasByAccountNumber(req, res) {
     const { accountNumber } = req.params;
@@ -170,9 +161,7 @@ class activeBiasController {
 
     return this.activeBiasService.updateactiveBiasByMerchantToken(merchantId, token, body)
       .then(() => Response.success(res, {
-        // testValid:  result._id,
         message: 'activeBias for token received'
-        // response: result
       }, HttpStatus.ACCEPTED))
       .catch((error) => {
         this.logger.error('activeBiasUpdate', error);
